@@ -5,6 +5,8 @@ import {createStackNavigator} from 'react-navigation-stack'
 import {createStackNavigator} from '@react-navigation/stack'
 import {NavigationContainer} from '@react-navigation/native'
 import {createDrawerNavigator} from '@react-navigation/drawer' */
+import LogInScreen from '../screens/LogIn/LogInScreen';
+import SignUpScreen from '../screens/SignUp/SignUpScreen';
 import HomeScreen from '../screens/Home/HomeScreen';
 import CategoriesScreen from '../screens/Categories/CategoriesScreen';
 import RecipeScreen from '../screens/Recipe/RecipeScreen';
@@ -41,6 +43,8 @@ function MainNavigator() {
 
 const MainNavigator = createStackNavigator(
   {
+    LogIn: LogInScreen,
+    SignUp: SignUpScreen,
     Home: HomeScreen,
     Categories: CategoriesScreen,
     Recipe: RecipeScreen,
@@ -50,7 +54,7 @@ const MainNavigator = createStackNavigator(
     IngredientsDetails: IngredientsDetailsScreen
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'LogIn',
     // headerMode: 'float',
     defaulfNavigationOptions: ({ navigation }) => ({
       headerTitleStyle: {
