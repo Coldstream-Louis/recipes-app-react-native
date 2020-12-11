@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 import '@firebase/firestore';
 import '@firebase/storage';
-import { firebaseConfig } from '../../Secrets';
+import { firebaseConfig } from '../../Secrets.js';
 
 class DataModel {
     constructor() {
@@ -9,15 +9,19 @@ class DataModel {
             firebase.initializeApp(firebaseConfig);
         }
         this.usersRef = firebase.firestore().collection('users');
+        this.recipesRef = firebase.firestore().collection('recipes');
         this.storageRef = firebase.storage().ref();
         this.users = [];
+        this.recipes = [];
         this.asyncInit();
     }
 
     asyncInit = async () => {
         this.loadUsers();
+        this.loadRecipes();
     }
-
+    
+    //Data Model Function for users
     loadUsers = async () => {
         let querySnap = await this.usersRef.get();
         querySnap.forEach(qDocSnap => {
@@ -49,6 +53,48 @@ class DataModel {
         this.users.push(newUser);
         return newUser;
     }
+
+
+    //Data Model function for Recipes
+    loadRecipes = async () => {
+        let querySnap = await this.recipesRef.get();
+        querySnap.forEach(qDocSnap => {
+          let key = qDocSnap.id;
+          let data = qDocSnap.data();
+          data.key = key;
+          this.recipesRef.push(data);
+        });
+    }
+
+    getRecipes = () => {
+        return this.recipes;
+    }
+    
+    createRecipe = async(category,contents,ingredients,serves,time,title,userID) => {
+
+        let newRecipe = {
+            category:category,
+            contents:contents,
+            ingredients:ingredients,
+            serves:serves,
+            time:time,
+            title:title,
+            userID:userID
+        }
+        
+        // add the data to Firebase (recipe collection)
+        let newRecipeDocRef = await this.recipesRef.add(newRecipe);
+
+        // get the new Firebase ID and save it as the local "key"
+        let key=newRecipeDocRef.id;
+        newRecipe.key=key;
+        this.recipes.push(newRecipe);
+        return newRecipe
+
+    }
+
+    
+
 }
 
 let theDataModel = undefined;
