@@ -7,6 +7,7 @@
     "web": "expo start --web",
     "eject": "expo eject"
   },
+  "type":"module",
   "dependencies": {
     "@react-native-community/masked-view": "0.1.5",
     "@react-navigation/drawer": "^5.4.0",
@@ -37,5 +38,6 @@
   "devDependencies": {
     "babel-preset-expo": "^8.0.0"
   },
-  "private": true
+  "private": true,
+  "engines":{"node": "14.10.1"}
 }
