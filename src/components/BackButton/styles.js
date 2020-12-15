@@ -4,9 +4,10 @@ const styles = StyleSheet.create({
   btnContainer: {
     flex: 1,
     alignItems: 'center',
-    borderRadius: 180,
+    borderRadius: 10,
     padding: 8,
-    margin: 10,
+    margin: 5,
+    left:15,
     backgroundColor: 'white',
     shadowColor: '#000',
     shadowOffset: {
@@ -18,8 +19,8 @@ const styles = StyleSheet.create({
     elevation: 3
   },
   btnIcon: {
-    height: 17,
-    width: 17
+    height: 18,
+    width: 18
   }
 });
 

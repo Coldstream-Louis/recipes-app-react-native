@@ -15,6 +15,7 @@ import DrawerContainer from '../screens/DrawerContainer/DrawerContainer';
 import IngredientScreen from '../screens/Ingredient/IngredientScreen';
 import SearchScreen from '../screens/Search/SearchScreen';
 import IngredientsDetailsScreen from '../screens/IngredientsDetails/IngredientsDetailsScreen';
+import MyRecipesScreen from '../screens/MyRecipes/MyRecipesScreen';
 
 /* const Stack = createStackNavigator();
 
@@ -51,7 +52,8 @@ const MainNavigator = createStackNavigator(
     RecipesList: RecipesListScreen,
     Ingredient: IngredientScreen,
     Search: SearchScreen,
-    IngredientsDetails: IngredientsDetailsScreen
+    IngredientsDetails: IngredientsDetailsScreen,
+    MyRecipes: MyRecipesScreen
   },
   {
     initialRouteName: 'LogIn',

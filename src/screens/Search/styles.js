@@ -9,6 +9,15 @@ const styles = StyleSheet.create({
   btnIcon: {
     height: 14,
     width: 14
+  },
+  searchContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white'
+  },
+  listContainer: {
+    marginTop: 80
   }
 });
 

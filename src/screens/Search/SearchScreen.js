@@ -26,32 +26,6 @@ export default class SearchScreen extends React.Component {
             navigation.openDrawer();
           }}
         />
-      ),
-      headerTitle: (
-        <SearchBar
-          containerStyle={{
-            backgroundColor: 'transparent',
-            borderBottomColor: 'transparent',
-            borderTopColor: 'transparent',
-            flex: 1
-          }}
-          inputContainerStyle={{
-            backgroundColor: '#EDEDED'
-          }}
-          inputStyle={{
-            backgroundColor: '#EDEDED',
-            borderRadius: 10,
-            color: 'black'
-          }}
-          searchIcond
-          clearIcon
-          //lightTheme
-          round
-          onChangeText={text => params.handleSearch(text)}
-          //onClear={() => params.handleSearch('')}
-          placeholder="Search"
-          value={params.data}
-        />
       )
     };
   };
@@ -68,14 +42,14 @@ export default class SearchScreen extends React.Component {
     const { navigation } = this.props;
     navigation.setParams({
       handleSearch: this.handleSearch,
-      data: this.getValue
+      data: this.getValue()
     });
   }
 
-  handleSearch = text => {
+  handleSearch = (text) => {
     var recipeArray1 = getRecipesByRecipeName(text);
     var recipeArray2 = getRecipesByCategoryName(text);
-    var recipeArray3 = getRecipesByIngredientName(text);
+    // var recipeArray3 = getRecipesByIngredientName(text);
     var aux = recipeArray1.concat(recipeArray2);
     var recipeArray = [...new Set(aux)];
     if (text == '') {
@@ -111,15 +85,48 @@ export default class SearchScreen extends React.Component {
 
   render() {
     return (
+      
       <View>
-        <FlatList
-          vertical
-          showsVerticalScrollIndicator={false}
-          numColumns={2}
-          data={this.state.data}
-          renderItem={this.renderRecipes}
-          keyExtractor={item => `${item.recipeId}`}
+        <View style={styles.searchContainer}>
+        <SearchBar
+          containerStyle={{
+            backgroundColor: 'transparent',
+            borderBottomColor: 'transparent',
+            borderTopColor: 'transparent',
+            flex: 1,
+            marginTop: 50,
+            width: 300
+          }}
+          inputContainerStyle={{
+            backgroundColor: 'white',
+            height: 40
+          }}
+          inputStyle={{
+            backgroundColor: 'white',
+            borderRadius: 10,
+            color: 'black'
+          }}
+          searchIcond
+          clearIcon
+          //lightTheme
+          round
+          onChangeText={this.handleSearch}
+          //onClear={() => params.handleSearch('')}
+          placeholder="Search"
+          value={this.state.value}
         />
+        </View>
+        <View style={styles.listContainer}>
+          <FlatList
+            vertical
+            showsVerticalScrollIndicator={false}
+            numColumns={2}
+            data={this.state.data}
+            renderItem={this.renderRecipes}
+            keyExtractor={item => `${item.recipeId}`}
+          />
+        </View>
+      
       </View>
     );
   }

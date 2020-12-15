@@ -25,7 +25,7 @@ export const categories = [
   {
     id: 0,
     name: 'Pizza',
-    photo_url: 'https://amp.businessinsider.com/images/5c084bf7bde70f4ea53f0436-750-563.jpg'
+    photo_url: 'https://www.delonghi.com/Global/recipes/multifry/97.jpg'
   },
 ];
 
@@ -250,7 +250,7 @@ export const recipes = [
   {
     recipeId: 0,
     categoryId: 0,
-    title: 'Classic Lasagna',
+    title: 'French Fries',
     photo_url: 'https://namelymarly.com/wp-content/uploads/2018/04/20180415_Beet_Lasagna_10.jpg',
     photosArray: [
       "https://namelymarly.com/wp-content/uploads/2018/04/20180415_Beet_Lasagna_10.jpg",
