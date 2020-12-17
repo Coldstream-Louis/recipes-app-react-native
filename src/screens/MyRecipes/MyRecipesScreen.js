@@ -8,14 +8,6 @@ import { getCategoryName } from '../../data/MockDataAPI';
 import { getDataModel } from '../../data/dataModel';
 
 export default class MyRecipesScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Welcome Home '+navigation.getParam('user').displayName,
-    headerLeft: () => <MenuImage
-      onPress={() => {
-        navigation.openDrawer();
-      }}
-    />
-  });
 
   constructor(props) {
     super(props);

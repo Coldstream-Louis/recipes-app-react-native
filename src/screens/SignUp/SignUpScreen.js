@@ -5,6 +5,11 @@ import { getDataModel } from '../../data/dataModel';
 
 export default class SignUpScreen extends React.Component {
 
+  static navigationOptions = {
+    title: '',
+    headerTransparent: 'true'
+  };
+  
   constructor(props) {
     super(props);
     this.dataModel = getDataModel();

@@ -3,6 +3,7 @@ import { FlatList, ScrollView, Text, View, TouchableHighlight, Image } from 'rea
 import styles from './styles';
 import { recipes } from '../../data/dataArrays';
 import MenuImage from '../../components/MenuImage/MenuImage';
+import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import DrawerActions from 'react-navigation';
 import { getCategoryName } from '../../data/MockDataAPI';
 import { getDataModel } from '../../data/dataModel';
@@ -14,6 +15,12 @@ export default class HomeScreen extends React.Component {
       onPress={() => {
         navigation.openDrawer();
       }}
+    />,
+    headerRight: () => <ProfileImage
+      onPress={() => {
+        let user = navigation.getParam('user');
+        navigation.navigate('MyRecipes', {user: user });
+      }}
     />
   });
 
@@ -21,8 +28,10 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.dataModel = getDataModel();
     let allRecipes = this.dataModel.getRecipes();
+    let user = this.props.navigation.getParam('user');
     this.state = {
-      recipeList: allRecipes
+      recipeList: allRecipes,
+      user: user
     }
   }
 
@@ -49,7 +58,6 @@ export default class HomeScreen extends React.Component {
           numColumns={2}
           data={this.state.recipeList}
           renderItem={this.renderRecipes}
-          keyExtractor={item => `${item.recipeId}`}
         />
       </View>
     );

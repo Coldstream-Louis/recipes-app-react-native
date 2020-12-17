@@ -57,7 +57,6 @@ export default class CategoriesScreen extends React.Component {
         <FlatList
           data={this.state.category_list}
           renderItem={this.renderCategory}
-          keyExtractor={item => `${item.id}`}
         />
       </View>
     );
