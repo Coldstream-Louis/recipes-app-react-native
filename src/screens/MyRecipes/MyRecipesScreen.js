@@ -9,7 +9,7 @@ import { getDataModel } from '../../data/dataModel';
 
 export default class MyRecipesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'My Recipes',
+    title: 'Welcome Home '+navigation.getParam('user').displayName,
     headerLeft: () => <MenuImage
       onPress={() => {
         navigation.openDrawer();
@@ -19,6 +19,16 @@ export default class MyRecipesScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    this.dataModel = getDataModel();
+    let allRecipes = this.dataModel.getRecipes();
+    let MyRecipes = [];
+    /*
+    for (let recipe of allRecipes) {
+      if()
+    }*/
+    this.state = {
+      recipeList: allRecipes
+    }
   }
 
   onPressRecipe = item => {
@@ -28,9 +38,9 @@ export default class MyRecipesScreen extends React.Component {
   renderRecipes = ({ item }) => (
     <TouchableHighlight underlayColor='rgba(73,182,77,0.9)' onPress={() => this.onPressRecipe(item)}>
       <View style={styles.container}>
-        <Image style={styles.photo} source={{ uri: item.photo_url }} />
+        <Image style={styles.photo} source={{ uri: item.image_url  }} />
         <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text>
+        <Text style={styles.category}>{item.category}</Text>
       </View>
     </TouchableHighlight>
   );
@@ -42,9 +52,8 @@ export default class MyRecipesScreen extends React.Component {
           vertical
           showsVerticalScrollIndicator={false}
           numColumns={2}
-          data={recipes}
+          data={this.state.recipeList}
           renderItem={this.renderRecipes}
-          keyExtractor={item => `${item.recipeId}`}
         />
       </View>
     );

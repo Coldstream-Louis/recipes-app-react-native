@@ -10,15 +10,18 @@ class DataModel {
         }
         this.usersRef = firebase.firestore().collection('users');
         this.recipesRef = firebase.firestore().collection('recipes');
+        this.categoriesRef = firebase.firestore().collection('categories');
         this.storageRef = firebase.storage().ref();
         this.users = [];
         this.recipes = [];
+        this.categories = [];
         this.asyncInit();
     }
 
     asyncInit = async () => {
         this.loadUsers();
         this.loadRecipes();
+        this.loadCategories();
     }
     
     //Data Model Function for users
@@ -62,7 +65,7 @@ class DataModel {
           let key = qDocSnap.id;
           let data = qDocSnap.data();
           data.key = key;
-          this.recipesRef.push(data);
+          this.recipes.push(data);
         });
     }
 
@@ -89,9 +92,24 @@ class DataModel {
         let key=newRecipeDocRef.id;
         newRecipe.key=key;
         this.recipes.push(newRecipe);
-        return newRecipe
-
+        return newRecipe;
     }
+
+    loadCategories = async () => {
+        let querySnap = await this.categoriesRef.get();
+        querySnap.forEach(qDocSnap => {
+          let key = qDocSnap.id;
+          let data = qDocSnap.data();
+          data.key = key;
+          this.categories.push(data);
+        });
+    }
+ 
+    getCategories = () => {
+        return this.categories;
+    }
+
+
 
     
 

@@ -83,7 +83,58 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     textAlign: 'center'
-  }
+  },
+  listItemContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+  },
+  listItemTextContainer: {
+    flex: 0.7,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+    listItemText: {
+      fontSize: 14,
+    },
+  listItemButtonContainer: {
+    flex: 0.3,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  listHeaderContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: 'black'
+  },
+  listHeader: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  stepContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    marginTop: 30
+  },
+  step_image: {
+    ...StyleSheet.absoluteFillObject,
+    width: '100%',
+    height: 200
+  },
+  stepImageContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    width: viewportWidth,
+    height: 200
+  },
 });
 
 export default styles;

@@ -1,20 +1,20 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 const styles = StyleSheet.create({
-    container: {
+  container: {
     flex: 1,
-    backgroundColor: '#003f5c',
+    backgroundColor: '#fb5b5a',
     alignItems: 'center',
     justifyContent: 'center',
   },
   logo:{
-    fontSize:40,
-    color:"#ffffff",
-    marginBottom:40
+    fontSize: 40,
+    color: "#ffffff",
+    marginBottom: 40
   },
   inputView:{
     width:"80%",
-    backgroundColor:"#687dad",
+    backgroundColor:"#fff",
     borderRadius:25,
     height:50,
     marginBottom:20,
@@ -23,16 +23,19 @@ const styles = StyleSheet.create({
   },
   inputText:{
     height:50,
-    color:"white"
+    color:"white",
+    fontSize:14
   },
   forgot:{
     color:"white",
-    fontSize:11
+    fontSize:12
   },
   loginBtn:{
     width:"80%",
     backgroundColor:"#fb5b5a",
     borderRadius:25,
+    borderWidth: 2.5,
+    borderColor: "#fff",
     height:50,
     alignItems:"center",
     justifyContent:"center",
@@ -40,7 +43,8 @@ const styles = StyleSheet.create({
     marginBottom:10
   },
   loginText:{
-    color:"white"
+    color:"white",
+    fontSize:16
   }
 });
 

@@ -92,7 +92,7 @@ export default class SignUpScreen extends React.Component {
         <TouchableOpacity style={styles.loginBtn} onPress={this.onCreateAccount}>
           <Text style={styles.loginText}>Register as New User</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
+        <TouchableOpacity style={{marginTop: 10}} onPress={() => {
           this.props.navigation.goBack();
         }}>
           <Text style={styles.loginText}>Cancel</Text>

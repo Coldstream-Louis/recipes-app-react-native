@@ -4,6 +4,10 @@ import styles from './styles';
 import { getDataModel } from '../../data/dataModel';
 
 export default class LogInScreen extends React.Component {
+  static navigationOptions = {
+    title: '',
+    headerTransparent: 'true'
+  };
 
   constructor(props) {
     super(props);
@@ -57,7 +61,7 @@ export default class LogInScreen extends React.Component {
         <TouchableOpacity style={styles.loginBtn} onPress={this.onLogIn}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
+        <TouchableOpacity style={{marginTop: 10}} onPress={() => {
           this.props.navigation.navigate('SignUp');
         }}>
           <Text style={styles.loginText}>Signup</Text>

@@ -9,6 +9,7 @@ import {
 import styles from './styles';
 import { categories } from '../../data/dataArrays';
 import { getNumberOfRecipes } from '../../data/MockDataAPI';
+import { getDataModel } from '../../data/dataModel';
 
 export default class CategoriesScreen extends React.Component {
   static navigationOptions = {
@@ -17,20 +18,35 @@ export default class CategoriesScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    this.dataModel = getDataModel();
+    let allRecipes = this.dataModel.getRecipes();
+    let allCategories = this.dataModel.getCategories();
+    this.state = {
+      category_list: allCategories,
+      recipe_list: allRecipes
+    };
   }
 
-  onPressCategory = item => {
-    const title = item.name;
-    const category = item;
-    this.props.navigation.navigate('RecipesList', { category, title });
+  onPressCategory = (name) => {
+    this.props.navigation.navigate('RecipesList', {name});
   };
 
+  getNumbers = (name) => {
+    let c = 0;
+    for(let i = 0; i < this.state.recipe_list.length; i++) {
+      if(this.state.recipe_list[i].category == name){
+        c++;
+      }
+    }
+    return c;
+  }
+
   renderCategory = ({ item }) => (
-    <TouchableHighlight underlayColor='rgba(73,182,77,0.9)' onPress={() => this.onPressCategory(item)}>
+    <TouchableHighlight underlayColor='rgba(73,182,77,0.9)' onPress={() => this.onPressCategory(item.name)}>
       <View style={styles.categoriesItemContainer}>
-        <Image style={styles.categoriesPhoto} source={{ uri: item.photo_url }} />
+        <Image style={styles.categoriesPhoto} source={{ uri: item.image_url }} />
         <Text style={styles.categoriesName}>{item.name}</Text>
-        <Text style={styles.categoriesInfo}>{getNumberOfRecipes(item.id)} recipes</Text>
+        <Text style={styles.categoriesInfo}>{this.getNumbers(item.name)} recipes</Text>
       </View>
     </TouchableHighlight>
   );
@@ -39,7 +55,7 @@ export default class CategoriesScreen extends React.Component {
     return (
       <View>
         <FlatList
-          data={categories}
+          data={this.state.category_list}
           renderItem={this.renderCategory}
           keyExtractor={item => `${item.id}`}
         />

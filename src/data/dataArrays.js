@@ -24,7 +24,7 @@ export const categories = [
   },
   {
     id: 0,
-    name: 'Pizza',
+    name: 'Fast Food',
     photo_url: 'https://www.delonghi.com/Global/recipes/multifry/97.jpg'
   },
 ];
@@ -251,7 +251,7 @@ export const recipes = [
     recipeId: 0,
     categoryId: 0,
     title: 'French Fries',
-    photo_url: 'https://namelymarly.com/wp-content/uploads/2018/04/20180415_Beet_Lasagna_10.jpg',
+    photo_url: 'https://thumbor.thedailymeal.com/Kqs10n_zoYMq7a3i6r7frrm6aXk=/870x565/filters:focal(585x390:586x391)/https://www.thedailymeal.com/sites/default/files/recipe/2017/shutterstock_510881971.jpg',
     photosArray: [
       "https://namelymarly.com/wp-content/uploads/2018/04/20180415_Beet_Lasagna_10.jpg",
       'https://advancelocal-adapter-image-uploads.s3.amazonaws.com/image.al.com/home/bama-media/width600/img/news_impact/photo/burger-fijpg-57e7e5907630c2ad.jpg',
