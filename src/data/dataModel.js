@@ -73,13 +73,13 @@ class DataModel {
         return this.recipes;
     }
     
-    createRecipe = async(category,contents,ingredients,serves,time,title,userID) => {
+    createRecipe = async(category,contents,image_url,ingredients,title,userID) => {
 
         let newRecipe = {
             category:category,
             contents:contents,
+            image_url:image_url,
             ingredients:ingredients,
-            serves:serves,
             time:time,
             title:title,
             userID:userID
@@ -95,6 +95,30 @@ class DataModel {
         return newRecipe;
     }
 
+    deleteRecipe = async (recipeKey) => {
+        let docRef = await this.recipesRef.doc(recipeKey);
+        await docRef.delete(recipeKey);
+ 
+     }
+
+    updateList = async (recipeKey, category,image_url,contents,ingredients,time,title,userID) => {
+        let Recipe={
+        category:category,
+        contents:contents,
+        image_url:image_url,
+        ingredients:ingredients,
+        time:time,
+        title:title,
+        userID:userID
+        }
+          
+        let docRef = await this.recipesRef.doc(recipeKey);
+        await docRef.update(Recipe);
+  
+        // console.log(this.state.theList)
+      }
+
+
     loadCategories = async () => {
         let querySnap = await this.categoriesRef.get();
         querySnap.forEach(qDocSnap => {
@@ -108,11 +132,6 @@ class DataModel {
     getCategories = () => {
         return this.categories;
     }
-
-
-
-    
-
 }
 
 let theDataModel = undefined;
