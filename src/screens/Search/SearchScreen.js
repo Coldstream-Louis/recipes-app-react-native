@@ -9,12 +9,9 @@ import {
 import styles from './styles';
 import { ListItem, SearchBar } from 'react-native-elements';
 import MenuImage from '../../components/MenuImage/MenuImage';
-import {
-  getCategoryName,
-  getRecipesByRecipeName,
-  getRecipesByCategoryName,
-  getRecipesByIngredientName
-} from '../../data/MockDataAPI';
+import { getDataModel } from '../../data/dataModel';
+
+
 
 export default class SearchScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -32,10 +29,35 @@ export default class SearchScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    this.dataModel = getDataModel();
+    let recipes=this.dataModel.getRecipes();
     this.state = {
+      MyRecipes:recipes,
       value: '',
       data: []
     };
+  }
+  
+  getRecipesByCategoryName(categoryName) {
+    let nameUpper = categoryName.toUpperCase();
+    let recipesArray = [];
+    this.state.MyRecipes.map(data => {
+      if (data.category.toUpperCase().includes(nameUpper)) {
+        recipesArray.push(data); // return a vector of recipes
+      }
+    });
+    return recipesArray;
+  }
+  
+  getRecipesByRecipeName(recipeName) {
+    let nameUpper = recipeName.toUpperCase();
+    let recipesArray = [];
+    this.state.MyRecipes.map(data => {
+      if (data.title.toUpperCase().includes(nameUpper)) {
+        recipesArray.push(data);
+      }
+    });
+    return recipesArray;
   }
 
   componentDidMount() {
@@ -47,8 +69,8 @@ export default class SearchScreen extends React.Component {
   }
 
   handleSearch = (text) => {
-    var recipeArray1 = getRecipesByRecipeName(text);
-    var recipeArray2 = getRecipesByCategoryName(text);
+    var recipeArray1 = this.getRecipesByRecipeName(text);
+    var recipeArray2 = this.getRecipesByCategoryName(text);
     // var recipeArray3 = getRecipesByIngredientName(text);
     var aux = recipeArray1.concat(recipeArray2);
     var recipeArray = [...new Set(aux)];
@@ -76,12 +98,15 @@ export default class SearchScreen extends React.Component {
   renderRecipes = ({ item }) => (
     <TouchableHighlight underlayColor='rgba(73,182,77,0.9)' onPress={() => this.onPressRecipe(item)}>
       <View style={styles.container}>
-        <Image style={styles.photo} source={{ uri: item.photo_url }} />
+        <Image style={styles.photo} source={{ uri: item.image_url }} />
         <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text>
+        <Text style={styles.category}>{item.category}</Text>
       </View>
     </TouchableHighlight>
   );
+ 
+  
+
 
   render() {
     return (
@@ -123,7 +148,6 @@ export default class SearchScreen extends React.Component {
             numColumns={2}
             data={this.state.data}
             renderItem={this.renderRecipes}
-            keyExtractor={item => `${item.recipeId}`}
           />
         </View>
       
