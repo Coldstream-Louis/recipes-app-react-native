@@ -16,6 +16,9 @@ import IngredientScreen from '../screens/Ingredient/IngredientScreen';
 import SearchScreen from '../screens/Search/SearchScreen';
 import IngredientsDetailsScreen from '../screens/IngredientsDetails/IngredientsDetailsScreen';
 import MyRecipesScreen from '../screens/MyRecipes/MyRecipesScreen';
+import AddRecipeScreen from '../screens/AddRecipe/AddRecipeScreen';
+import CameraScreen from '../screens/Camera/CameraScreen';
+import EditRecipeScreen from '../screens/EditRecipe/EditRecipeScreen';
 
 /* const Stack = createStackNavigator();
 
@@ -53,7 +56,10 @@ const MainNavigator = createStackNavigator(
     Ingredient: IngredientScreen,
     Search: SearchScreen,
     IngredientsDetails: IngredientsDetailsScreen,
-    MyRecipes: MyRecipesScreen
+    MyRecipes: MyRecipesScreen,
+    AddRecipe: AddRecipeScreen,
+    EditRecipe: EditRecipeScreen,
+    Camera: CameraScreen,
   },
   {
     initialRouteName: 'LogIn',
