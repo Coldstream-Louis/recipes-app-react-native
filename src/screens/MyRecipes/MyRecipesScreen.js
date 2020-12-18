@@ -1,10 +1,6 @@
 import React from 'react';
 import { FlatList, ScrollView, Text, View, TouchableHighlight,TouchableOpacity, Image,Alert} from 'react-native';
 import styles from './styles';
-import { recipes } from '../../data/dataArrays';
-import MenuImage from '../../components/MenuImage/MenuImage';
-import DrawerActions from 'react-navigation';
-import { getCategoryName } from '../../data/MockDataAPI';
 import { getDataModel } from '../../data/dataModel';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -12,20 +8,28 @@ export default class MyRecipesScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.dataModel = getDataModel();
-    let allRecipes = this.dataModel.getRecipes();
-    let MyRecipes = [];
     let user = this.props.navigation.getParam('user');
-
-    for (let recipe of allRecipes) {
-      if (recipe.userID ===user.key){
-        MyRecipes.push(recipe);
-      }
-    }
+    this.dataModel = getDataModel();
     this.state = {
-      recipeList: MyRecipes,
-      user:user
+      user:user,
+      recipeList:[]
     }
+  }
+
+  componentDidMount() {
+    const {navigation} = this.props;
+    navigation.addListener ('willFocus', async () =>{
+      await this.dataModel.loadRecipes();
+      let allRecipes = this.dataModel.getRecipes();
+      let MyRecipes = [];
+      for (let i=0; i < allRecipes.length; i++) {
+        if (allRecipes[i].userID == this.state.user.key){
+          MyRecipes.push(allRecipes[i]);
+        }
+      }
+      console.log(MyRecipes[1].content.length);
+      this.setState({recipeList: MyRecipes});
+    });
   }
 
  
@@ -33,8 +37,13 @@ export default class MyRecipesScreen extends React.Component {
     this.props.navigation.navigate('Recipe', { item });
   };
 
+  onEdit = (item) => {
+    this.props.navigation.navigate('EditRecipe', {recipe: item});
+  }
+
   addRecipeFunction=()=>{
-    Alert.alert("Floating Button Clicked");
+    //Alert.alert("Floating Button Clicked");
+    this.props.navigation.navigate('AddRecipe', {user: this.state.user, operation: 'create' });
   };
 
   renderRecipes = ({ item }) => (
@@ -58,11 +67,11 @@ export default class MyRecipesScreen extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={{minHeight: '100%'}}>
         <FlatList
           vertical
           showsVerticalScrollIndicator={false}
-          numColumns={2}
+          numColumns={1}
           data={this.state.recipeList}
           renderItem={this.renderRecipes}
         />

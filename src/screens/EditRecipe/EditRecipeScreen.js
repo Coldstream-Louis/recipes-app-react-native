@@ -14,42 +14,26 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import AddContentButton from '../../components/AddContentButton/AddContentButton';
 import { getDataModel } from '../../data/dataModel';
 
-export default class AddRecipeScreen extends React.Component {
+export default class EditRecipeScreen extends React.Component {
   constructor(props) {
     super(props);
-    let user = this.props.navigation.getParam('user');
-    console.log(user.displayName);
+    let recipe = this.props.navigation.getParam('recipe');
     this.dataModel = getDataModel();
     this.allCategories = this.dataModel.getCategories();
-    let ingredientList = [];
-    let pl = {
-        name: '',
-        quantity: ''
-    };
-    ingredientList.push(pl);
-    let contentList = [];
-    let pc = {
-        img_url: 'https://icon-library.com/images/add-image-icon/add-image-icon-14.jpg',
-        text: ''
-    };
-    contentList.push(pc);
     this.state = {
-        userId: user.key,
-        title: '',
-        image_url: 'https://icon-library.com/images/add-image-icon/add-image-icon-14.jpg',
-        category: null,
-        time: '',
-        ingredientList: ingredientList,
-        contentList: contentList
+        userId: recipe.userId,
+        title: recipe.title,
+        image_url: recipe.image_url,
+        category: recipe.category,
+        time: recipe.time,
+        ingredientList: recipe.ingredients,
+        contentList: recipe.content
     };
   }
 
   componentDidMount() {
-    console.log("willFocus runs") // calling it here to make sure it is logged at initial start
-
     const {navigation} = this.props;
     navigation.addListener ('willFocus', async () =>{
-        console.log('running');
         let operation = this.props.navigation.getParam('operation');
         console.log(operation);
         if (operation == 'Upload Image') {
@@ -65,10 +49,6 @@ export default class AddRecipeScreen extends React.Component {
             }
         }
     });
-  }
-
-  saveRecipe = async () => {
-      
   }
 
   addIngredient = () => {
@@ -134,8 +114,7 @@ export default class AddRecipeScreen extends React.Component {
           <View style={styles.infoContainer} zIndex={10}>
             <DropDownPicker
               items={this.categoryList()}
-              defaultNull={this.state.category === null}
-              placeholder="Select a Category"
+              defaultValue={this.state.category}
               containerStyle={styles.dropDown}
               style={{backgroundColor: '#fafafa'}}
               dropDownStyle={{backgroundColor: '#fafafa', minHeight: 320}}
@@ -244,7 +223,7 @@ export default class AddRecipeScreen extends React.Component {
           </View>
         </View>
       </ScrollView>
-        <TouchableOpacity activeOpacity={0.5} onPress={this.saveRecipe} style={styles.TouchableOpacityStyle} >
+        <TouchableOpacity activeOpacity={0.5} onPress={this.addRecipeFunction} style={styles.TouchableOpacityStyle} >
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
     </View>

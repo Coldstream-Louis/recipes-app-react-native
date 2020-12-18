@@ -71,14 +71,14 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    right: 30,
-    bottom: 30,
+    right: 40,
+    bottom: 80,
   },
   FloatingButtonStyle: {
   
     resizeMode: 'contain',
-    width: 50,
-    height: 50,
+    width: 80,
+    height: 80,
   }
 });
 

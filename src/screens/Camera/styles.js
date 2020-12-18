@@ -2,18 +2,12 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   headerButtonContainer: {
-    padding: 20,
-    width: '100%',
-    marginTop: 20,
-    borderRadius: 10,
-    backgroundColor: 'lightskyblue',
-    justifyContent: 'center',
-    alignItems: 'center'
+    padding: 10
   },
   headerButtonImage: {
     justifyContent: 'center',
-    width: 60,
-    height: 60,
+    width: 25,
+    height: 25,
     margin: 6
   }
 });

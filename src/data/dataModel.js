@@ -12,6 +12,8 @@ class DataModel {
         this.recipesRef = firebase.firestore().collection('recipes');
         this.categoriesRef = firebase.firestore().collection('categories');
         this.storageRef = firebase.storage().ref();
+        this.theImage = undefined;
+        this.theCallback = undefined;
         this.users = [];
         this.recipes = [];
         this.categories = [];
@@ -60,6 +62,7 @@ class DataModel {
 
     //Data Model function for Recipes
     loadRecipes = async () => {
+        this.recipes=[];
         let querySnap = await this.recipesRef.get();
         querySnap.forEach(qDocSnap => {
           let key = qDocSnap.id;
@@ -109,8 +112,30 @@ class DataModel {
         return this.categories;
     }
 
-
-
+    addChatImage = async (imageObject) => {
+        console.log('... and here we would add the image ...');
+        this.theImage = imageObject;
+    
+        // invoke the callback right away, OK if the storage takes a bit longer
+        if (this.theCallback) {
+          this.theCallback(imageObject);
+        }
+    
+        // Set up storage refs and download URL
+        let fileName = '' + Date.now();
+        let imageRef = this.storageRef.child(fileName);
+    
+        // fetch the image object from the local filesystem
+        let response = await fetch(imageObject.uri);
+        let imageBlob = await response.blob();
+    
+        // then upload it to Firebase Storage
+        await imageRef.put(imageBlob);
+    
+        // ... and update the current image Document in Firestore
+        let downloadURL = await imageRef.getDownloadURL();
+        return downloadURL;
+    }
     
 
 }
