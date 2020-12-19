@@ -37,6 +37,15 @@ export default class SearchScreen extends React.Component {
       data: []
     };
   }
+
+  componentDidMount() {
+    const {navigation} = this.props;
+    navigation.addListener ('willFocus', async () =>{
+      await this.dataModel.loadRecipes();
+      let allRecipes = this.dataModel.getRecipes();
+      this.setState({MyRecipes: allRecipes});
+    });
+  }
   
   getRecipesByCategoryName(categoryName) {
     let nameUpper = categoryName.toUpperCase();

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ScrollView, Text, View, TouchableHighlight,TouchableOpacity, Image,Alert} from 'react-native';
+import { FlatList, ScrollView, Text, View, TouchableHighlight,TouchableOpacity, Image, Alert} from 'react-native';
 import styles from './styles';
 import { getDataModel } from '../../data/dataModel';
 import { Ionicons } from '@expo/vector-icons';
@@ -58,6 +58,22 @@ export default class MyRecipesScreen extends React.Component {
     this.setState({recipeList: MyRecipes});
   }
 
+  onDelete = async (item) => {
+    Alert.alert(
+      "Are you sure you want to",
+      "Delete this recipe?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Delete", onPress: () => this.deleteItem(item) }
+      ],
+      { cancelable: false }
+    );
+  }
+
   renderRecipes = ({ item }) => (
     <TouchableHighlight underlayColor='rgba(73,182,77,0.9)' onPress={() => this.onPressRecipe(item)}>
       <View style={styles.container}>
@@ -70,9 +86,9 @@ export default class MyRecipesScreen extends React.Component {
                         onPress={()=>{this.onEdit(item)}} />
         <Ionicons name="md-trash" style={styles.deleteicon}
                         size={35} 
-                        onPress={()=>{this.deleteItem(item)}} />
+                        onPress={()=>{this.onDelete(item)}} />
         </View>
-        </View>
+      </View>
       
     </TouchableHighlight>
   );

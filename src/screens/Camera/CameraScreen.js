@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 
 import { Button } from 'react-native-elements';
 
@@ -77,6 +77,10 @@ export default class CameraScreen extends React.Component {
                   flex: 0.1,
                   alignSelf: 'flex-end',
                   alignItems: 'center',
+                  backgroundColor: 'lightskyblue',
+                  minWidth: 100,
+                  height: 50,
+                  borderRadius: 10,
                 }}
                 onPress={() => {
                   this.setState({
@@ -86,16 +90,18 @@ export default class CameraScreen extends React.Component {
                         : Camera.Constants.Type.back,
                   });
                 }}>
-                <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> 
+                <Text style={{ fontSize: 22, margin: 10, color: 'white' }}> 
                   Flip 
                 </Text>
               </TouchableOpacity>
             </View>
           </Camera>
-          <Button
-            title='Take Picture'
-            onPress={this.handleTakePicture}
-          />
+          <View style={{flex: 0.2, alignItems: 'center'}}>
+            <TouchableOpacity onPress={this.handleTakePicture} 
+              style={styles.cameraButton}>
+              <Image style={styles.cameraIcon} source={require('../../../assets/icons/camera.png')}/>
+            </TouchableOpacity>
+          </View>
         </View>
       );
     }

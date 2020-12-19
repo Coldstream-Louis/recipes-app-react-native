@@ -7,7 +7,8 @@ import {
   View,
   TouchableOpacity,
   Image,
-  Alert
+  Alert,
+  KeyboardAvoidingView
 } from 'react-native';
 import styles from './styles';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -124,7 +125,7 @@ export default class AddRecipeScreen extends React.Component {
 
   render() {
     return (
-    <View style={{minHeight: '100%'}}>
+    <KeyboardAvoidingView style={{minHeight: '100%'}} behavior="padding">
       <ScrollView style={styles.container}>
         <View style={styles.imageContainer}>
           <TouchableOpacity style={styles.imageButton1} onPress={() => {this.addImage('-1')}}>
@@ -256,7 +257,7 @@ export default class AddRecipeScreen extends React.Component {
         <TouchableOpacity activeOpacity={0.5} onPress={this.saveRecipe} style={styles.TouchableOpacityStyle} >
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
     );
   }
 }
