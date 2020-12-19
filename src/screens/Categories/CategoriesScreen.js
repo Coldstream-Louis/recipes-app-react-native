@@ -19,12 +19,21 @@ export default class CategoriesScreen extends React.Component {
   constructor(props) {
     super(props);
     this.dataModel = getDataModel();
-    let allRecipes = this.dataModel.getRecipes();
     let allCategories = this.dataModel.getCategories();
+    let allRecipes = this.dataModel.getRecipes();
     this.state = {
       category_list: allCategories,
       recipe_list: allRecipes
     };
+  }
+
+  componentDidMount() {
+    const {navigation} = this.props;
+    navigation.addListener ('willFocus', async () =>{
+      await this.dataModel.loadRecipes();
+      let allRecipes = this.dataModel.getRecipes();
+      this.setState({recipe_List: allRecipes});
+    });
   }
 
   onPressCategory = (name) => {

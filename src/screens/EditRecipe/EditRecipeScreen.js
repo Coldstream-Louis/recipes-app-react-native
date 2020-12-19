@@ -18,10 +18,12 @@ export default class EditRecipeScreen extends React.Component {
   constructor(props) {
     super(props);
     let recipe = this.props.navigation.getParam('recipe');
+    this.user = this.props.navigation.getParam('user');
     this.dataModel = getDataModel();
     this.allCategories = this.dataModel.getCategories();
     this.state = {
-        userId: recipe.userId,
+        recipeKey: recipe.key,
+        userID: recipe.userID,
         title: recipe.title,
         image_url: recipe.image_url,
         category: recipe.category,
@@ -49,6 +51,19 @@ export default class EditRecipeScreen extends React.Component {
             }
         }
     });
+  }
+
+  saveRecipe = async () => {
+    await this.dataModel.updateRecipe(
+        this.state.recipeKey,
+        this.state.category,
+        this.state.contentList,
+        this.state.image_url,
+        this.state.ingredientList,
+        this.state.time,
+        this.state.title,
+        this.state.userID);
+    this.props.navigation.navigate('MyRecipes', {user: this.user});
   }
 
   addIngredient = () => {
@@ -90,7 +105,7 @@ export default class EditRecipeScreen extends React.Component {
         ],
         { cancelable: false }
     );*/
-    this.props.navigation.navigate('Camera', {index: index});
+    this.props.navigation.navigate('Camera', {index: index, operation: 'edit'});
   }
 
   render() {
@@ -223,7 +238,7 @@ export default class EditRecipeScreen extends React.Component {
           </View>
         </View>
       </ScrollView>
-        <TouchableOpacity activeOpacity={0.5} onPress={this.addRecipeFunction} style={styles.TouchableOpacityStyle} >
+        <TouchableOpacity activeOpacity={0.5} onPress={this.saveRecipe} style={styles.TouchableOpacityStyle} >
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
     </View>

@@ -21,16 +21,26 @@ export default class RecipesListScreen extends React.Component {
     super(props);
     this.dataModel = getDataModel();
     let allRecipes = this.dataModel.getRecipes();
-    let category = this.props.navigation.getParam('name');
-    let selectedRecipes = [];
-    for(let i = 0; i < allRecipes.length; i++) {
-      if(allRecipes[i].category == category) {
-        selectedRecipes.push(allRecipes[i]);
-      }
-    }
+    
     this.state = {
-      recipeList: selectedRecipes
+      recipeList: []
     }
+  }
+
+  componentDidMount() {
+    const {navigation} = this.props;
+    navigation.addListener ('willFocus', async () =>{
+      await this.dataModel.loadRecipes();
+      let allRecipes = this.dataModel.getRecipes();
+      let category = this.props.navigation.getParam('name');
+      let selectedRecipes = [];
+      for(let i = 0; i < allRecipes.length; i++) {
+        if(allRecipes[i].category == category) {
+          selectedRecipes.push(allRecipes[i]);
+        }
+      }
+      this.setState({recipeList: selectedRecipes})
+    });
   }
 
   onPressRecipe = item => {

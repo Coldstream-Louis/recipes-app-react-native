@@ -27,12 +27,20 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.dataModel = getDataModel();
-    let allRecipes = this.dataModel.getRecipes();
     let user = this.props.navigation.getParam('user');
     this.state = {
-      recipeList: allRecipes,
+      recipeList: [],
       user: user
     }
+  }
+
+  componentDidMount() {
+    const {navigation} = this.props;
+    navigation.addListener ('willFocus', async () =>{
+      await this.dataModel.loadRecipes();
+      let allRecipes = this.dataModel.getRecipes();
+      this.setState({recipeList: allRecipes});
+    });
   }
 
   onPressRecipe = item => {

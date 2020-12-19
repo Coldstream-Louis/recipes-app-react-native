@@ -27,7 +27,6 @@ export default class MyRecipesScreen extends React.Component {
           MyRecipes.push(allRecipes[i]);
         }
       }
-      console.log(MyRecipes[1].content.length);
       this.setState({recipeList: MyRecipes});
     });
   }
@@ -38,13 +37,26 @@ export default class MyRecipesScreen extends React.Component {
   };
 
   onEdit = (item) => {
-    this.props.navigation.navigate('EditRecipe', {recipe: item});
+    this.props.navigation.navigate('EditRecipe', {user: this.state.user, operation: 'edit', recipe: item});
   }
 
   addRecipeFunction=()=>{
     //Alert.alert("Floating Button Clicked");
     this.props.navigation.navigate('AddRecipe', {user: this.state.user, operation: 'create' });
   };
+
+  deleteItem = async (item) => {
+    await this.dataModel.deleteRecipe(item.key);
+    await this.dataModel.loadRecipes();
+    let allRecipes = this.dataModel.getRecipes();
+    let MyRecipes = [];
+    for (let i=0; i < allRecipes.length; i++) {
+      if (allRecipes[i].userID == this.state.user.key){
+        MyRecipes.push(allRecipes[i]);
+      }
+    }
+    this.setState({recipeList: MyRecipes});
+  }
 
   renderRecipes = ({ item }) => (
     <TouchableHighlight underlayColor='rgba(73,182,77,0.9)' onPress={() => this.onPressRecipe(item)}>
@@ -54,10 +66,10 @@ export default class MyRecipesScreen extends React.Component {
         <Text style={styles.category}>{item.category}</Text>
         <View style={styles.ButtonContainer}>
         <Ionicons name="md-create" style={styles.editicon}
-                        size={30} 
+                        size={35} 
                         onPress={()=>{this.onEdit(item)}} />
         <Ionicons name="md-trash" style={styles.deleteicon}
-                        size={30} 
+                        size={35} 
                         onPress={()=>{this.deleteItem(item)}} />
         </View>
         </View>

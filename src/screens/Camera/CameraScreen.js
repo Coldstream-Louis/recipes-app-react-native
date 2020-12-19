@@ -40,7 +40,10 @@ export default class CameraScreen extends React.Component {
   handleTakePicture = async () => {
     let picData = await this.camera.takePictureAsync();
     let img_url = await this.dataModel.addChatImage(picData);
-    this.props.navigation.navigate('AddRecipe', {operation:'Upload Image', index: this.index, url: img_url});
+    if(this.props.navigation.getParam('operation')=='add')
+        this.props.navigation.navigate('AddRecipe', {operation:'Upload Image', index: this.index, url: img_url});
+    else
+        this.props.navigation.navigate('EditRecipe', {operation:'Upload Image', index: this.index, url: img_url});
   }
 
   setupCamera = async (cameraRef) => { 

@@ -18,6 +18,7 @@ export default class AddRecipeScreen extends React.Component {
   constructor(props) {
     super(props);
     let user = this.props.navigation.getParam('user');
+    this.user = user;
     console.log(user.displayName);
     this.dataModel = getDataModel();
     this.allCategories = this.dataModel.getCategories();
@@ -68,7 +69,15 @@ export default class AddRecipeScreen extends React.Component {
   }
 
   saveRecipe = async () => {
-      
+      await this.dataModel.createRecipe(
+          this.state.category,
+          this.state.contentList,
+          this.state.image_url,
+          this.state.ingredientList,
+          this.state.time,
+          this.state.title,
+          this.state.userId);
+      this.props.navigation.navigate('MyRecipes', {user: this.user});
   }
 
   addIngredient = () => {
@@ -110,7 +119,7 @@ export default class AddRecipeScreen extends React.Component {
         ],
         { cancelable: false }
     );*/
-    this.props.navigation.navigate('Camera', {index: index});
+    this.props.navigation.navigate('Camera', {index: index, operation: 'add'});
   }
 
   render() {
